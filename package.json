@@ -1,8 +1,8 @@
 {
-  "name": "solix2mqtt",
+  "name": "solix-exporter",
   "version": "1.0.0",
   "main": "src/app.ts",
-  "author": "Tom Quist",
+  "author": "Martin Reinhardt",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -17,8 +17,8 @@
     "node-fetch": "2.6.7"
   },
   "devDependencies": {
-    "@types/node": "^18.7.18",
     "@types/lodash": "^4.14.185",
+    "@types/node": "^18.7.18",
     "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
