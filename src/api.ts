@@ -1,6 +1,6 @@
-import fetch from "node-fetch";
-import { Logger } from "./logger";
-import { ECDH, createCipheriv, createECDH, createHash } from "crypto";
+import fetch from 'node-fetch';
+import { Logger } from './logger';
+import { ECDH, createCipheriv, createECDH, createHash } from 'crypto';
 
 export interface Options {
   username: string;
@@ -13,21 +13,21 @@ export interface LoginRequest {
   ab: string;
   client_secret_info: {
     public_key: string;
-  },
+  };
   enc: number;
   email: string;
   password: string;
   time_zone: number;
   verify_code?: string;
   captcha_id?: string;
-  answer?: string
+  answer?: string;
   transaction: string;
 }
 
 export interface SuccessResponse<T> {
   code: 0;
-  msg: "success!";
-  data: T
+  msg: 'success!';
+  data: T;
 }
 
 export interface BaseResponse<T> {
@@ -58,8 +58,8 @@ export interface LoginResultResponse {
   phone: string;
   phone_code: string;
   server_secret_info: {
-    public_key: string
-  } | null,
+    public_key: string;
+  } | null;
   params: Array<{
     param_type: number;
     param_value: string;
@@ -69,7 +69,7 @@ export interface LoginResultResponse {
   fa_info: {
     step: number;
     info: string;
-  },
+  };
   country_code: string;
 }
 
@@ -95,14 +95,14 @@ export interface DeviceDataResponse {
 }
 
 interface SiteHomepageResponse {
-  site_list: Site[],
-  solar_list: any[],
-  pps_list: any[],
-  solarbank_list: Solarbank[],
+  site_list: Site[];
+  solar_list: any[];
+  pps_list: any[];
+  solarbank_list: Solarbank[];
 }
 
 interface SiteListResponse {
-  site_list: Site[]
+  site_list: Site[];
 }
 
 export interface UserMqttInfo {
@@ -154,96 +154,101 @@ export interface UserMqttInfo {
   aws_root_ca1_pem: string;
 
   origin: string;
-  
-  /**
-   * PKCS#12, a binary format for storing the server certificate, 
-   * any intermediate certificates, and the private key in one encryptable file.
-   */ 
-  pkcs12: string;
 
+  /**
+   * PKCS#12, a binary format for storing the server certificate,
+   * any intermediate certificates, and the private key in one encryptable file.
+   */
+  pkcs12: string;
 }
 
 export interface Site {
-  site_id: string,
-  site_name: string,
-  site_img: string,
-  device_type_list: number[]
+  site_id: string;
+  site_name: string;
+  site_img: string;
+  device_type_list: number[];
 }
 
 export interface Solarbank {
-  device_pn: string,
-  device_sn: string,
-  device_name: string,
-  device_img: string,
-  battery_power: `${number}`,
-  bind_site_status: string,
-  charging_power: `${number}`,
-  power_unit: string,
-  charging_status: `${number}`,
-  status: `${number}`,
-  wireless_type: `${number}`,
-  main_version: `${number}`,
-  photovoltaic_power: `${number}`,
-  output_power: `${number}`
+  device_pn: string;
+  device_sn: string;
+  device_name: string;
+  device_img: string;
+  battery_power: `${number}`;
+  bind_site_status: string;
+  charging_power: `${number}`;
+  power_unit: string;
+  charging_status: `${number}`;
+  status: `${number}`;
+  wireless_type: `${number}`;
+  main_version: `${number}`;
+  photovoltaic_power: `${number}`;
+  output_power: `${number}`;
 }
 
 export interface ScenInfo {
   home_info: {
-    home_name: string,
-    home_img: string,
-    charging_power: `${number}`,
-    power_unit:string,
-  },
-  solar_list: any[],
+    home_name: string;
+    home_img: string;
+    charging_power: `${number}`;
+    power_unit: string;
+  };
+  solar_list: any[];
   pps_info: {
-    pps_list: any[],
-    total_charging_power: `${number}`,
-    power_unit:string,
-    total_battery_power: `${number}`,
-    updated_time: string,
-    pps_status: number,
-  },
+    pps_list: any[];
+    total_charging_power: `${number}`;
+    power_unit: string;
+    total_battery_power: `${number}`;
+    updated_time: string;
+    pps_status: number;
+  };
   statistics: Array<{
-    type: `${number}`,
-    total: `${number}`
-    unit: string,
-  }>,
-  topology_type:`${number}`,
+    type: `${number}`;
+    total: `${number}`;
+    unit: string;
+  }>;
+  topology_type: `${number}`;
   solarbank_info: {
-    solarbank_list: Solarbank[],
-    total_charging_power: `${number}`,
-    power_unit: string,
-    charging_status: `${number}`,
-    total_battery_power: `${number}`,
-    updated_time: string,
-    total_photovoltaic_power: `${number}`,
-    total_output_power: `${number}`
-  },
-  retain_load: string,
-  updated_time: string,
-  power_site_type: number,
+    solarbank_list: Solarbank[];
+    total_charging_power: `${number}`;
+    power_unit: string;
+    charging_status: `${number}`;
+    total_battery_power: `${number}`;
+    battery_discharge_power: `${number}`;
+    updated_time: string;
+    total_photovoltaic_power: `${number}`;
+    total_output_power: `${number}`;
+    output_power: `${number}`;
+    solar_power_1: string;
+    solar_power_2: string;
+    solar_power_3: string;
+    solar_power_4: string;
+  };
+  retain_load: string;
+  updated_time: string;
+  power_site_type: number;
 }
 
 export interface EnergyAnalysis {
   power: Array<{
-    time:`${number}:${number}`,
-    value:`${number}`
-  }>,
-  charge_trend: null,
-  charge_level: any[],
-  power_unit: string,
-  charge_total: `${number}`,
-  charge_unit: string,
-  discharge_total: `${number}`,
-  discharge_unit: string,
-  charging_pre: `${number}`,
-  electricity_pre: `${number}`,
-  others_pre: `${number}`,
+    time: `${number}:${number}`;
+    value: `${number}`;
+  }>;
+  charge_trend: null;
+  charge_level: any[];
+  power_unit: string;
+  charge_total: `${number}`;
+  charge_unit: string;
+  discharge_total: `${number}`;
+  discharge_unit: string;
+  charging_pre: `${number}`;
+  electricity_pre: `${number}`;
+  others_pre: `${number}`;
   statistics: Array<{
-    type: `${number}`,
-    total: `${number}`,
-    unit:string
-  }>
+    type: `${number}`;
+    total: `${number}`;
+    unit: string;
+  }>;
 }
 
 export interface LoadData {
@@ -254,7 +259,6 @@ export interface LoadData {
 export interface HomeLoadChartResponse {
   data: LoadData[];
 }
-
 
 export interface TrustDevice {
   open_udid: string;
@@ -284,30 +288,31 @@ export interface LoadConfiguration {
   step: number;
 }
 
-
 export enum ParamType {
-  LoadConfiguration = "4",
+  LoadConfiguration = '4',
 }
 
-export type ParamData<T extends ParamType> = T extends ParamType.LoadConfiguration ? LoadConfiguration : string;
+export type ParamData<T extends ParamType> =
+  T extends ParamType.LoadConfiguration ? LoadConfiguration : string;
 
 export interface SiteDeviceParamResponse<T extends ParamType> {
-  param_data: ParamData<T>
+  param_data: ParamData<T>;
 }
 
 export class SolixApi {
-  private readonly SERVER_PUBLIC_KEY = "04c5c00c4f8d1197cc7c3167c52bf7acb054d722f0ef08dcd7e0883236e0d72a3868d9750cb47fa4619248f3d83f0f662671dadc6e2d31c2f41db0161651c7c076";
+  private readonly SERVER_PUBLIC_KEY =
+    '04c5c00c4f8d1197cc7c3167c52bf7acb054d722f0ef08dcd7e0883236e0d72a3868d9750cb47fa4619248f3d83f0f662671dadc6e2d31c2f41db0161651c7c076';
 
   private readonly username: string;
 
   private readonly password: string;
-  
+
   private readonly country: string;
 
   private readonly timezone: string;
 
-  private ecdh: ECDH = createECDH("prime256v1");
-  
+  private ecdh: ECDH = createECDH('prime256v1');
+
   private readonly logger: Logger;
 
   constructor(options: Options) {
@@ -321,124 +326,164 @@ export class SolixApi {
 
   private md5(s: string) {
     this.logger.log(s);
-    return createHash("md5").update(Buffer.from(s)).digest("hex");
+    return createHash('md5').update(Buffer.from(s)).digest('hex');
   }
 
   private getTimezoneGMTString(): string {
     const tzo = -new Date().getTimezoneOffset();
-    const dif = tzo >= 0 ? "+" : "-";
+    const dif = tzo >= 0 ? '+' : '-';
     return `GMT${dif}${this.pad(tzo / 60)}:${this.pad(tzo % 60)}`;
   }
 
   private pad(num: number): string {
     const norm = Math.floor(Math.abs(num));
-    return `${(norm < 10 ? "0" : "")}${norm}`;
+    return `${norm < 10 ? '0' : ''}${norm}`;
   }
 
   private encryptAPIData(data: string, key: Buffer): string {
-    const cipher = createCipheriv("aes-256-cbc", key, key.slice(0, 16));
-    return (
-      cipher.update(data, "utf8", "base64") +
-      cipher.final("base64")
-    );
+    const cipher = createCipheriv('aes-256-cbc', key, key.slice(0, 16));
+    return cipher.update(data, 'utf8', 'base64') + cipher.final('base64');
   }
 
-  private async fetch(endpoint: string, data?: any, headers?: Record<string, string>) {
+  private async fetch(
+    endpoint: string,
+    data?: any,
+    headers?: Record<string, string>,
+  ) {
     this.logger.log(JSON.stringify(data));
-    const urlBuilder = new URL(endpoint, "https://ankerpower-api-eu.anker.com");
+    const urlBuilder = new URL(endpoint, 'https://ankerpower-api-eu.anker.com');
     const url = urlBuilder.href;
-    
+
     return fetch(url, {
-      method: "POST",
+      method: 'POST',
       body: data != null ? JSON.stringify(data) : undefined,
       headers: {
-        ["Content-Type"]: "application/json",
+        ['Content-Type']: 'application/json',
         Country: this.country,
         Timezone: this.timezone,
-        ["Model-Type"]: "DESKTOP",
-        ["App-Name"]: "anker_power",
-        ["Os-Type"]: "android",
+        ['Model-Type']: 'DESKTOP',
+        ['App-Name']: 'anker_power',
+        ['Os-Type']: 'android',
         ...headers,
       },
     });
   }
 
   public withLogin(login: LoginResultResponse) {
-    const headers = { ["X-Auth-Token"]: login.auth_token, "gtoken": this.md5(login.user_id) };
-    const authFetch = async <T>(endpoint: string, data?: any): Promise<ResultResponse<T>> => {
+    const headers = {
+      ['X-Auth-Token']: login.auth_token,
+      gtoken: this.md5(login.user_id),
+    };
+    const authFetch = async <T>(
+      endpoint: string,
+      data?: any,
+    ): Promise<ResultResponse<T>> => {
       const response = await this.fetch(endpoint, data, headers);
-      return await response.json() as ResultResponse<T>;
+      return (await response.json()) as ResultResponse<T>;
     };
     return {
       getRelateAndBindDevices: async () => {
         const data = {};
-        return authFetch<DeviceDataResponse>("/power_service/v1/app/get_relate_and_bind_devices", data);
+        return authFetch<DeviceDataResponse>(
+          '/power_service/v1/app/get_relate_and_bind_devices',
+          data,
+        );
       },
       getUserMqttInfo: async () => {
-        return authFetch<UserMqttInfo>("/app/devicemanage/get_user_mqtt_info");
+        return authFetch<UserMqttInfo>('/app/devicemanage/get_user_mqtt_info');
       },
       siteHomepage: async () => {
         const data = {};
-        return authFetch<SiteHomepageResponse>("/power_service/v1/site/get_site_homepage", data);
+        return authFetch<SiteHomepageResponse>(
+          '/power_service/v1/site/get_site_homepage',
+          data,
+        );
       },
       getSiteList: async () => {
         const data = {};
-        return authFetch<SiteListResponse>("/power_service/v1/site/get_site_list", data);
+        return authFetch<SiteListResponse>(
+          '/power_service/v1/site/get_site_list',
+          data,
+        );
       },
       getHomeLoadChart: async ({
         siteId,
-        deviceSn = "", // Was always an empty string
-      }:{ 
-        siteId: string,
-        deviceSn?: string
+        deviceSn = '', // Was always an empty string
+      }: {
+        siteId: string;
+        deviceSn?: string;
       }) => {
-        const data = { site_id:siteId, device_sn: deviceSn };
-        return authFetch<HomeLoadChartResponse>("/power_service/v1/site/get_home_load_chart", data);
+        const data = { site_id: siteId, device_sn: deviceSn };
+        return authFetch<HomeLoadChartResponse>(
+          '/power_service/v1/site/get_home_load_chart',
+          data,
+        );
       },
       scenInfo: async (siteId: string) => {
         const data = { site_id: siteId };
-        return authFetch<ScenInfo>("/power_service/v1/site/get_scen_info", data);
+        return authFetch<ScenInfo>(
+          '/power_service/v1/site/get_scen_info',
+          data,
+        );
       },
-      energyAnalysis:async ({
+      energyAnalysis: async ({
         siteId,
         deviceSn,
         type,
         startTime = new Date(),
         endTime,
-        deviceType = "solar_production",
+        deviceType = 'solar_production',
       }: {
-        siteId: string, 
-        deviceSn: string, 
-        type: "day" | "week" | "year", 
-        startTime?: Date, 
-        endTime?: Date,
-        deviceType?: "solar_production"
+        siteId: string;
+        deviceSn: string;
+        type: 'day' | 'week' | 'year';
+        startTime?: Date;
+        endTime?: Date;
+        deviceType?: 'solar_production';
       }) => {
-        const startTimeString = `${startTime.getUTCFullYear()}-${this.pad(startTime.getUTCMonth())}-${this.pad(startTime.getUTCDate())}`;
-        const endTimeString = endTime != null ? `${endTime.getUTCFullYear()}-${endTime.getUTCMonth()}-${endTime.getUTCDate()}` : "";
+        const startTimeString = `${startTime.getUTCFullYear()}-${this.pad(
+          startTime.getUTCMonth(),
+        )}-${this.pad(startTime.getUTCDate())}`;
+        const endTimeString =
+          endTime != null
+            ? `${endTime.getUTCFullYear()}-${endTime.getUTCMonth()}-${endTime.getUTCDate()}`
+            : '';
         const data = {
           site_id: siteId,
-          device_sn:deviceSn,
+          device_sn: deviceSn,
           type,
           start_time: startTimeString,
           device_type: deviceType,
           end_time: endTimeString,
         };
-        return authFetch<EnergyAnalysis>("/power_service/v1/site/energy_analysis", data);
+        return authFetch<EnergyAnalysis>(
+          '/power_service/v1/site/energy_analysis',
+          data,
+        );
       },
       getSiteDeviceParam: async <T extends ParamType>({
         paramType,
         siteId,
-      }:{
-        paramType: T,
-        siteId: string
+      }: {
+        paramType: T;
+        siteId: string;
       }): Promise<ResultResponse<SiteDeviceParamResponse<T>>> => {
         const data = { site_id: siteId, param_type: paramType };
-        const response = await authFetch<{ param_data: string }>("/power_service/v1/site/get_site_device_param", data);
+        const response = await authFetch<{ param_data: string }>(
+          '/power_service/v1/site/get_site_device_param',
+          data,
+        );
         if (response.data != null) {
           switch (paramType) {
             case ParamType.LoadConfiguration:
-              return { ...response, data: { param_data: JSON.parse(response.data.param_data) as ParamData<T> } };
+              return {
+                ...response,
+                data: {
+                  param_data: JSON.parse(
+                    response.data.param_data,
+                  ) as ParamData<T>,
+                },
+              };
             default:
               return response as ResultResponse<SiteDeviceParamResponse<T>>;
           }
@@ -450,21 +495,29 @@ export class SolixApi {
         siteId,
         cmd = 17, // Unknown what this means but it's alway 17
         paramData,
-      }:{
-        paramType: T,
-        siteId: string,
-        cmd?: number,
-        paramData: ParamData<T>,
+      }: {
+        paramType: T;
+        siteId: string;
+        cmd?: number;
+        paramData: ParamData<T>;
       }) => {
-        let data = { site_id: siteId, param_type: paramType, cmd, param_data: paramData as unknown };
+        let data = {
+          site_id: siteId,
+          param_type: paramType,
+          cmd,
+          param_data: paramData as unknown,
+        };
         switch (paramType) {
           case ParamType.LoadConfiguration:
             data = { ...data, param_data: JSON.stringify(paramData) };
             break;
           default:
-            // Should be a string already
+          // Should be a string already
         }
-        return authFetch<Record<string, never>>("/power_service/v1/site/set_site_device_param", data);
+        return authFetch<Record<string, never>>(
+          '/power_service/v1/site/set_site_device_param',
+          data,
+        );
       },
     };
   }
@@ -473,19 +526,27 @@ export class SolixApi {
     const data: LoginRequest = {
       ab: this.country,
       client_secret_info: {
-        public_key: this.ecdh.getPublicKey("hex"),
+        public_key: this.ecdh.getPublicKey('hex'),
       },
       enc: 0,
       email: this.username,
-      password: this.encryptAPIData(this.password, this.ecdh.computeSecret(Buffer.from(this.SERVER_PUBLIC_KEY, "hex"))),
-      time_zone: new Date().getTimezoneOffset() !== 0 ? -new Date().getTimezoneOffset() * 60 * 1000 : 0,
+      password: this.encryptAPIData(
+        this.password,
+        this.ecdh.computeSecret(Buffer.from(this.SERVER_PUBLIC_KEY, 'hex')),
+      ),
+      time_zone:
+        new Date().getTimezoneOffset() !== 0
+          ? -new Date().getTimezoneOffset() * 60 * 1000
+          : 0,
       transaction: `${new Date().getTime()}`,
     };
-    const response = await this.fetch("/passport/login", data);
+    const response = await this.fetch('/passport/login', data);
     if (response.status === 200) {
-      return await response.json() as ResultResponse<LoginResultResponse>;
+      return (await response.json()) as ResultResponse<LoginResultResponse>;
     } else {
-      throw new Error(`Login failed (${response.status}): ${await response.text()}`);
+      throw new Error(
+        `Login failed (${response.status}): ${await response.text()}`,
+      );
     }
   }
 }

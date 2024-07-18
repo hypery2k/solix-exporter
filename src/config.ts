@@ -1,18 +1,18 @@
-import { config as configDotenv } from "dotenv";
+import { config as configDotenv } from 'dotenv';
 
-function stringEnvVar(envVarName: keyof typeof process["env"]): string;
+function stringEnvVar(envVarName: keyof typeof process['env']): string;
 
 function stringEnvVar(
-  envVarName: keyof typeof process["env"],
-  defaultValue: string
+  envVarName: keyof typeof process['env'],
+  defaultValue: string,
 ): string;
 
 function stringEnvVar(
-  envVarName: keyof typeof process["env"],
-  defaultValue: null
+  envVarName: keyof typeof process['env'],
+  defaultValue: null,
 ): string | undefined;
 function stringEnvVar(
-  envVarName: keyof typeof process["env"],
+  envVarName: keyof typeof process['env'],
   defaultValue?: string | null,
 ): string | undefined {
   const value = process.env[envVarName];
@@ -23,7 +23,7 @@ function stringEnvVar(
   return value ?? defaultValue ?? undefined;
 }
 function intEnvVar(
-  envVarName: keyof typeof process["env"],
+  envVarName: keyof typeof process['env'],
   defaultValue?: number,
 ): number {
   if (defaultValue != null) {
@@ -38,18 +38,18 @@ function intEnvVar(
   }
 }
 function boolEnvVar(
-  envVarName: keyof typeof process["env"],
+  envVarName: keyof typeof process['env'],
   defaultValue = false,
 ): boolean {
   const value = stringEnvVar(envVarName, null);
   if (value == null) {
     return defaultValue;
   }
-  return value === "true";
+  return value === 'true';
 }
 
 function arrayEnvVar(
-  envVarName: keyof typeof process["env"],
+  envVarName: keyof typeof process['env'],
   defaultValue?: string[],
 ): string[] {
   if (defaultValue != null) {
@@ -57,27 +57,21 @@ function arrayEnvVar(
     if (value == null) {
       return defaultValue;
     }
-    return value.split(",");
+    return value.split(',');
   } else {
     const value = stringEnvVar(envVarName);
-    return value.split(",");
+    return value.split(',');
   }
 }
 export function getConfig() {
   configDotenv();
   return {
-    username: stringEnvVar("S2M_USER"),
-    password: stringEnvVar("S2M_PASSWORD"),
-    country: stringEnvVar("S2M_COUNTRY"),
-    loginStore: stringEnvVar("S2M_LOGIN_STORE", "auth.data"),
-    pollInterval: intEnvVar("S2M_POLL_INTERVAL", 30),
-    mqttUrl: stringEnvVar("S2M_MQTT_URI"),
-    mqttClientId: stringEnvVar("S2M_MQTT_CLIENT_ID", "solix2mqtt"),
-    mqttUsername: stringEnvVar("S2M_MQTT_USERNAME", null),
-    mqttPassword: stringEnvVar("S2M_MQTT_PASSWORD", null),
-    mqttRetain: boolEnvVar("S2M_MQTT_RETAIN"),
-    mqttTopic: stringEnvVar("S2M_MQTT_TOPIC", "solix"),
-    verbose: boolEnvVar("S2M_VERBOSE", false),
+    username: stringEnvVar('ANKER_USERNAME'),
+    password: stringEnvVar('ANKER_PASSWORD'),
+    country: stringEnvVar('ANKER_COUNTRY'),
+    loginStore: stringEnvVar('S2M_LOGIN_STORE', 'auth.data'),
+    pollInterval: intEnvVar('S2M_POLL_INTERVAL', 30),
+    verbose: boolEnvVar('LOG_VERBOSE', false),
   };
 }
 
@@ -85,12 +79,10 @@ export function anonymizeConfig(
   config: ReturnType<typeof getConfig>,
 ): ReturnType<typeof getConfig> {
   const newConfig = { ...config };
-  const hideKeys: Array<keyof ReturnType<typeof getConfig>> = [
-    "password",
-  ];
+  const hideKeys: Array<keyof ReturnType<typeof getConfig>> = ['password'];
   for (const key of hideKeys) {
     if (config[key] != null) {
-      (newConfig as any)[key] = "***";
+      (newConfig as any)[key] = '***';
     }
   }
   return newConfig;

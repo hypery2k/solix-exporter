@@ -1,9 +1,15 @@
-# solix2mqtt
+# Solix Prometheus Exporter
 
-CLI tool to poll data for an Anker SOLIX Solarbank E1600 Balcony Power Storage and publish it to an MQTT broker.
+
+
+[![License](https://img.shields.io/github/license/hypery2k/solix-exporter.svg)](LICENSE)
+[![CI](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml/badge.svg)](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml)
+[![Docker Stars](https://img.shields.io/docker/stars/continuoussecuritytooling/keycloak-reporting-cli.svg)](https://hub.docker.com/r/continuoussecuritytooling/keycloak-reporting-cli/)
+
+Exporter to poll data for an Anker SOLIX Solarbank E1600 Balcony Power Storage and publish it as Prometheus Stats.
 
 ## Description
-This is a thin bridge between the API used by the Anker App and MQTT. Although the project is currently read-only, adding support for updates should be relatively straightforward. Feel free to open a PR.
+This is a thin bridge between the API used by the Anker App and Prometheus. Based on [solix2mqtt](https://github.com/tomquist/solix2mqtt)
 
 ## Prerequisites
 
@@ -24,37 +30,32 @@ With these steps, you will have set up the necessary environment to run and use 
 ### Locally
 ```bash
 npm install && npm run build
-  S2M_USER=*** \
-  S2M_PASSWORD=*** \
-  S2M_COUNTRY=DE \
-  S2M_MQTT_URI=mqtt://localhost:1883 \
+  ANKER_USERNAME=*** \
+  ANKER_PASSWORD=*** \
+  ANKER_COUNTRY=DE \
+  DEVICE_SN=A****** \
   npm run start
 ```
 
 ### Docker
 ```bash
 docker run -d \
-  -e S2M_USER=*** \
-  -e S2M_PASSWORD=*** \
-  -e S2M_COUNTRY=DE \
-  -e S2M_MQTT_URI=mqtt://localhost:1883 \
+  -e ANKER_USERNAME=*** \
+  -e ANKER_PASSWORD=*** \
+  -e ANKER_COUNTRY=DE \
+  -e DEVICE_SN=A****** \
+  -p 3000:3000
   tomquist/solix2mqtt:latest
 ```
 
 ## Configuration
 The app can be configured using the following environment variables:
 
-- `S2M_USER` (required): Email address of your Anker account
-- `S2M_PASSWORD` (required): Password of your Anker account
-- `S2M_COUNTRY` (required): A two-letter country code (e.g. `DE`)
-- `S2M_LOGIN_STORE` (optional): Path to a file where the auth tokens will be cached. (default `auth.data`)
-- `S2M_POLL_INTERVAL` (optional): The polling interval in seconds (default `60`) 
-- `S2M_MQTT_URI` (required): The MQTT broker URL, e.g. `mqtt://host:1883`
-- `S2M_MQTT_USERNAME` (optional): Optional username for MQTT authentication
-- `S2M_MQTT_PASSWORD` (optional): Optional password for MQTT authentication
-- `S2M_MQTT_CLIENT_ID` (optional): MQTT client identifier (default: `solix2mqtt``)
-- `S2M_MQTT_TOPIC` (required): Topic prefix where data should be published (default: `solix``)
-- `S2M_VERBOSE` (optional): Set to true for more logs (default: `false``)
+- `ANKER_USERNAME` (required): Email address of your Anker account
+- `ANKER_PASSWORD` (required): Password of your Anker account
+- `ANKER_COUNTRY` (required): A two-letter country code (e.g. `DE`)
+- `DEVICE_SN` (required): Device S/N
+- `LOG_VERBOSE` (optional): Set to true for more logs (default: `false``)
 
 ## Auth
 
