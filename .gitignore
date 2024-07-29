@@ -13,3 +13,4 @@ bin/
 **/.pnp.*
 **/yarn-error.log
 auth.data
+tmp/

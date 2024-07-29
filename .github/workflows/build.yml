@@ -63,7 +63,7 @@ jobs:
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
-          image: continuoussecuritytooling/keycloak-reporting-cli
+          image: hypery2k/keycloak-reporting-cli
           tags: 'latest next ${{env.APP_VERSION}} ${{env.APP_VERSION}}_rc'
           containerfiles: |
             ./Dockerfile
@@ -87,7 +87,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           tags: 'next ${{env.APP_VERSION}}_rc'
           registry: registry.hub.docker.com
-          username: continuoussecuritytooling
+          username: hypery2k
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
         if: github.ref == 'refs/heads/develop'
 
@@ -98,6 +98,6 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           tags: 'latest ${{env.APP_VERSION}}'
           registry: registry.hub.docker.com
-          username: continuoussecuritytooling
+          username: hypery2k
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
         if: github.ref_type == 'tag' || github.tag != ''
