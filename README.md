@@ -9,7 +9,7 @@
 Exporter to poll data for an Anker SOLIX Solarbank E1600 Balcony Power Storage and publish it as Prometheus Stats.
 
 ## Description
-This is a thin bridge between the API used by the Anker App and Prometheus. Based on [solix2mqtt](https://github.com/tomquist/solix2mqtt)
+This is a thin bridge between the API used by the Anker App and Prometheus. Based on [solix2mqtt](https://github.com/hypery2k/solix-exporter)
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 - **[npm](https://www.npmjs.com/)**: This project uses npm for dependency management. It is included with the Node.js installation.
 
 ### Setup
-1. **Clone the repository**: Clone this repository to your local machine using `git clone https://github.com/tomquist/solix2mqtt.git`.
+1. **Clone the repository**: Clone this repository to your local machine using `git clone https://github.com/hypery2k/solix-exporter.git`.
 2. **Navigate to the project directory**: `cd solix2mqtt`.
 3. **Install dependencies**: Run `npm install` to install all the project dependencies.
 
@@ -45,7 +45,7 @@ docker run -d \
   -e ANKER_COUNTRY=DE \
   -e DEVICE_SN=A****** \
   -p 3000:3000
-  tomquist/solix2mqtt:latest
+  hypery2k/solix-exporter:latest
 ```
 
 ## Configuration
@@ -73,4 +73,5 @@ This project is the result of some work I did to integrate my Solix into my home
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
+- [solix2mqtt](https://github.com/SteiniZuHaus/Solix2)
 - [eufy-security-client](https://github.com/bropat/eufy-security-client)

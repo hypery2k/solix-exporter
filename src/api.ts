@@ -359,6 +359,7 @@ export class SolixApi {
       body: data != null ? JSON.stringify(data) : undefined,
       headers: {
         ['Content-Type']: 'application/json',
+        'Cache-Control': 'no-cache',
         Country: this.country,
         Timezone: this.timezone,
         ['Model-Type']: 'DESKTOP',
@@ -439,7 +440,7 @@ export class SolixApi {
         type: 'day' | 'week' | 'year';
         startTime?: Date;
         endTime?: Date;
-        deviceType?: 'solar_production';
+        deviceType?: 'solar_production' | 'solarbank';
       }) => {
         const startTimeString = `${startTime.getUTCFullYear()}-${this.pad(
           startTime.getUTCMonth(),

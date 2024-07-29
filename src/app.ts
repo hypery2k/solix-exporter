@@ -26,19 +26,19 @@ function restService() {
       const response = `
 # HELP solar_now_p current watt of solar
 # TYPE solar_now_p gauge
-solar_now_p ${deviceInfo.solar_total}
+solar_now_p ${Math.round(<number>deviceInfo.solar_total)}
 # HELP solar_now_bat current power of battery (percentage, 0-1)
 # TYPE solar_now_bat gauge
-solar_now_bat ${deviceInfo.bat_soc}
+solar_now_bat ${Math.round(<number>deviceInfo.bat_soc)}
 # HELP solar_now_bat_charge_p current power for charging in watt
 # TYPE solar_now_bat_charge_p gauge
-solar_now_bat_charge_p ${deviceInfo.battery_charge}
+solar_now_bat_charge_p ${Math.round(<number>deviceInfo.battery_charge)}
 # HELP solar_now_bat_discharge_p current power for discharging in watt
 # TYPE solar_now_bat_discharge_p gauge
-solar_now_bat_discharge_p ${deviceInfo.battery_discharge}
+solar_now_bat_discharge_p ${Math.round(<number>deviceInfo.battery_discharge)}
 # HELP solar_now_grid current watt to grid
 # TYPE solar_now_grid gauge
-solar_now_grid ${deviceInfo.to_home}
+solar_now_grid ${Math.round(<number>deviceInfo.to_home)}
 `;
       res.send(response);
     } else {
@@ -91,25 +91,45 @@ async function run(): Promise<void> {
       } else {
         sites = siteHomepage.data.site_list;
       }
+      let deviceList = await loggedInApi.getRelateAndBindDevices();
+      console.debug('deviceList', deviceList);
 
       for (const site of sites) {
         const scenInfo = await loggedInApi.scenInfo(site.site_id);
+        const deviceSn =
+          scenInfo.data.solarbank_info.solarbank_list[0].device_sn;
+        console.log(`Logging for device ${deviceSn}`, scenInfo);
+        const energyAnalysis = await loggedInApi.energyAnalysis({
+          siteId: site.site_id,
+          deviceSn: device,
+          type: 'day',
+        });
+        console.debug('energyAnalysis', energyAnalysis);
+        console.debug('scenInfo', scenInfo);
         devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn] = {
-          solar_pv1: scenInfo.data.solarbank_info.solar_power_1,
-          solar_pv2: scenInfo.data.solarbank_info.solar_power_2,
-          solar_pv3: scenInfo.data.solarbank_info.solar_power_3,
-          solar_pv4: scenInfo.data.solarbank_info.solar_power_4,
-          solar_total:
+          solar_pv1: Number(scenInfo.data.solarbank_info.solar_power_1),
+          solar_pv2: Number(scenInfo.data.solarbank_info.solar_power_2),
+          solar_pv3: Number(scenInfo.data.solarbank_info.solar_power_3),
+          solar_pv4: Number(scenInfo.data.solarbank_info.solar_power_4),
+          solar_total: Number(
             scenInfo.data.solarbank_info.solarbank_list[0].photovoltaic_power,
-          bat_soc: scenInfo.data.solarbank_info.solarbank_list[0].battery_power,
-          battery_charge:
+          ),
+          bat_soc: Number(
+            scenInfo.data.solarbank_info.solarbank_list[0].battery_power,
+          ),
+          battery_charge: Number(
             scenInfo.data.solarbank_info.solarbank_list[0].charging_power,
-          battery_discharge:
+          ),
+          battery_discharge: Number(
             scenInfo.data.solarbank_info.battery_discharge_power,
-          to_home: scenInfo.data.solarbank_info.total_output_power,
+          ),
+          to_home: Number(scenInfo.data.solarbank_info.total_output_power),
         };
-        const deviceList = await loggedInApi.getRelateAndBindDevices();
-        console.log();
+        deviceList = await loggedInApi.getRelateAndBindDevices();
+        console.log(
+          'Current device stats',
+          devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn],
+        );
       }
       logger.log('Published.');
     } else {

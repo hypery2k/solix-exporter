@@ -70,7 +70,7 @@ export function getConfig() {
     password: stringEnvVar('ANKER_PASSWORD'),
     country: stringEnvVar('ANKER_COUNTRY'),
     loginStore: stringEnvVar('S2M_LOGIN_STORE', 'auth.data'),
-    pollInterval: intEnvVar('S2M_POLL_INTERVAL', 30),
+    pollInterval: intEnvVar('S2M_POLL_INTERVAL', 120),
     verbose: boolEnvVar('LOG_VERBOSE', false),
   };
 }
