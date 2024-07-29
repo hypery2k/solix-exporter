@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist/* && npm i",
     "start": "node ./bin/app.js",
     "dev": "ts-node ./src/app.ts",
     "lint:fix": "eslint --fix 'src/**/*.ts{,x}'",
