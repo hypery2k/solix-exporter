@@ -1,4 +1,4 @@
-export type Logger = Pick<typeof console, "log" | "warn" | "error">;
+export type Logger = Pick<typeof console, 'log' | 'warn' | 'error'>;
 
 export function consoleLogger(verbose: boolean): Logger {
   return {
