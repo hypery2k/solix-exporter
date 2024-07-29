@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/github/license/hypery2k/solix-exporter.svg)](LICENSE)
 [![CI](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml/badge.svg)](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml)
-[![Docker Stars](https://img.shields.io/docker/stars/continuoussecuritytooling/keycloak-reporting-cli.svg)](https://hub.docker.com/r/continuoussecuritytooling/keycloak-reporting-cli/)
+[![Docker Stars](https://img.shields.io/docker/stars/hypery2k/solix-exporter.svg)](https://hub.docker.com/r/hypery2k/solix-exporter/)
 
 Exporter to poll data for an Anker SOLIX Solarbank E1600 Balcony Power Storage and publish it as Prometheus Stats.
 
