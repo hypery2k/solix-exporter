@@ -69,6 +69,8 @@ export function getConfig() {
     username: stringEnvVar('ANKER_USERNAME'),
     password: stringEnvVar('ANKER_PASSWORD'),
     country: stringEnvVar('ANKER_COUNTRY'),
+    deviceSn: stringEnvVar('DEVICE_SN'),
+    httpPort: intEnvVar('HTTP_PORT', 3000),
     loginStore: stringEnvVar('S2M_LOGIN_STORE', 'auth.data'),
     pollInterval: intEnvVar('S2M_POLL_INTERVAL', 120),
     verbose: boolEnvVar('LOG_VERBOSE', false),

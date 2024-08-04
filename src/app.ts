@@ -9,8 +9,8 @@ const app: Express = express();
 
 const config = getConfig();
 const logger = consoleLogger(config.verbose);
-const port = <string>process.env.HTTP_PORT || '3000';
-const device: string = <string>process.env.DEVICE_SN;
+const port = config.httpPort;
+const device = config.deviceSn;
 
 const devices: any = {};
 
@@ -46,7 +46,7 @@ solar_now_grid ${Math.round(<number>deviceInfo.to_home)}
     }
   });
 
-  app.listen(parseInt(port), () => {
+  app.listen(port, () => {
     console.log(`Exporter listening on port ${port}`);
   });
 }
