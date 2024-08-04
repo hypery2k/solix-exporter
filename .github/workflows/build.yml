@@ -71,15 +71,6 @@ jobs:
             BUILD_DATE=${{env.BUILD_DATE}}
             APP_VERSION=${{env.APP_VERSION}}
 
-      - name: Push To NPM Registry
-        id: push-to-npm-tagged
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
-          npm publish
-        if: github.ref_type == 'tag' || github.tag != ''
-
       - name: Push To Docker Hub
         id: push-to-dockerhub-preview
         uses: redhat-actions/push-to-registry@v2
@@ -87,7 +78,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           tags: 'next ${{env.APP_VERSION}}_rc'
           registry: registry.hub.docker.com
-          username: hypery2k
+          username: ${{ secrets.DOCKER_HUB_USER}}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
         if: github.ref == 'refs/heads/develop'
 
@@ -98,6 +89,6 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           tags: 'latest ${{env.APP_VERSION}}'
           registry: registry.hub.docker.com
-          username: hypery2k
+          username: ${{ secrets.DOCKER_HUB_USER}}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
         if: github.ref_type == 'tag' || github.tag != ''

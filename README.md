@@ -2,14 +2,14 @@
 
 
 
-[![License](https://img.shields.io/github/license/hypery2k/solix-exporter.svg)](LICENSE)
-[![CI](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml/badge.svg)](https://github.com/hypery2k/solix-exporter/actions/workflows/build.yml)
-[![Docker Stars](https://img.shields.io/docker/stars/hypery2k/solix-exporter.svg)](https://hub.docker.com/r/hypery2k/solix-exporter/)
+[![License](https://img.shields.io/github/license/t21n/solix-exporter.svg)](LICENSE)
+[![CI](https://github.com/t21n/solix-exporter/actions/workflows/build.yml/badge.svg)](https://github.com/t21n/solix-exporter/actions/workflows/build.yml)
+[![Docker Stars](https://img.shields.io/docker/stars/tools4homeautomation/solix-exporter.svg)](https://hub.docker.com/r/tools4homeautomation/solix-exporter)
 
 Exporter to poll data for an Anker SOLIX Solarbank E1600 Balcony Power Storage and publish it as Prometheus Stats.
 
 ## Description
-This is a thin bridge between the API used by the Anker App and Prometheus. Based on [solix2mqtt](https://github.com/hypery2k/solix-exporter)
+This is a thin bridge between the API used by the Anker App and Prometheus. Based on [solix2mqtt](https://github.com/t21n/solix-exporter)
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 - **[npm](https://www.npmjs.com/)**: This project uses npm for dependency management. It is included with the Node.js installation.
 
 ### Setup
-1. **Clone the repository**: Clone this repository to your local machine using `git clone https://github.com/hypery2k/solix-exporter.git`.
+1. **Clone the repository**: Clone this repository to your local machine using `git clone https://github.com/t21n/solix-exporter.git`.
 2. **Navigate to the project directory**: `cd solix2mqtt`.
 3. **Install dependencies**: Run `npm install` to install all the project dependencies.
 
@@ -45,7 +45,7 @@ docker run -d \
   -e ANKER_COUNTRY=DE \
   -e DEVICE_SN=A****** \
   -p 3000:3000
-  hypery2k/solix-exporter:latest
+  t21n/solix-exporter:latest
 ```
 
 ## Configuration
