@@ -45,7 +45,7 @@ docker run -d \
   -e ANKER_COUNTRY=DE \
   -e DEVICE_SN=A****** \
   -p 3000:3000
-  t21n/solix-exporter:latest
+  tools4homeautomation/solix-exporter:latest
 ```
 
 ## Configuration
@@ -55,7 +55,9 @@ The app can be configured using the following environment variables:
 - `ANKER_PASSWORD` (required): Password of your Anker account
 - `ANKER_COUNTRY` (required): A two-letter country code (e.g. `DE`)
 - `DEVICE_SN` (required): Device S/N
-- `LOG_VERBOSE` (optional): Set to true for more logs (default: `false``)
+- `HTTP_PORT`(optional): Port for running the exporter (default: `3000`)
+- `S2M_LOGIN_STORE` (optional): path for the persistence of auth data (default: `auth.data`)
+- `LOG_VERBOSE` (optional): Set to true for more logs (default: `false`)
 
 ## Auth
 
