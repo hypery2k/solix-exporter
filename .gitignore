@@ -1,7 +1,11 @@
 node_modules/
-bin/
 .idea/
 .env
+
+# Build
+bin/
+dist/
+coverage/
 
 # yarn
 **/.yarn/*
