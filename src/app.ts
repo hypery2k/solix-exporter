@@ -40,6 +40,7 @@ solar_now_bat_discharge_p ${Math.round(<number>deviceInfo.battery_discharge)}
 # TYPE solar_now_grid gauge
 solar_now_grid ${Math.round(<number>deviceInfo.to_home)}
 `;
+      res.type('txt');
       res.send(response);
     } else {
       res.send('No data available');
