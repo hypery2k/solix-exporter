@@ -16,4 +16,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY --from=build /app/out /app
 
-CMD [ "node", "/app/bin/app.js" ]
+CMD [ "node", "/app/bin/src/app.js" ]
