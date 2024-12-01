@@ -96,53 +96,57 @@ async function run(): Promise<void> {
       const siteHomepage = await loggedInApi.siteHomepage();
 
       let sites;
-      if (siteHomepage.data.site_list.length === 0) {
-        // Fallback for Shared Accounts
-        sites = (await loggedInApi.getSiteList()).data.site_list;
-      } else {
-        sites = siteHomepage.data.site_list;
-      }
-      let deviceList = await loggedInApi.getRelateAndBindDevices();
-      console.debug('deviceList', deviceList);
+      if (siteHomepage.data) {
+        if (siteHomepage.data.site_list?.length === 0) {
+          // Fallback for Shared Accounts
+          sites = (await loggedInApi.getSiteList()).data.site_list;
+        } else {
+          sites = siteHomepage.data.site_list;
+        }
+        let deviceList = await loggedInApi.getRelateAndBindDevices();
+        console.debug('deviceList', deviceList);
 
-      for (const site of sites) {
-        const scenInfo = await loggedInApi.scenInfo(site.site_id);
-        const deviceSn =
-          scenInfo.data.solarbank_info.solarbank_list[0].device_sn;
-        console.debug(`Logging for device ${deviceSn}`, scenInfo);
-        const energyAnalysis = await loggedInApi.energyAnalysis({
-          siteId: site.site_id,
-          deviceSn: device,
-          type: 'day',
-        });
-        console.debug('energyAnalysis', energyAnalysis);
-        console.debug('scenInfo', scenInfo);
-        devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn] = {
-          solar_pv1: Number(scenInfo.data.solarbank_info.solar_power_1),
-          solar_pv2: Number(scenInfo.data.solarbank_info.solar_power_2),
-          solar_pv3: Number(scenInfo.data.solarbank_info.solar_power_3),
-          solar_pv4: Number(scenInfo.data.solarbank_info.solar_power_4),
-          solar_total: Number(
-            scenInfo.data.solarbank_info.solarbank_list[0].photovoltaic_power,
-          ),
-          bat_soc: Number(
-            scenInfo.data.solarbank_info.solarbank_list[0].battery_power,
-          ),
-          battery_charge: Number(
-            scenInfo.data.solarbank_info.solarbank_list[0].charging_power,
-          ),
-          battery_discharge: Number(
-            scenInfo.data.solarbank_info.battery_discharge_power,
-          ),
-          to_home: Number(scenInfo.data.solarbank_info.total_output_power),
-        };
-        deviceList = await loggedInApi.getRelateAndBindDevices();
-        console.log(
-          'Current device stats',
-          devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn],
-        );
+        for (const site of sites) {
+          const scenInfo = await loggedInApi.scenInfo(site.site_id);
+          const deviceSn =
+            scenInfo.data.solarbank_info.solarbank_list[0].device_sn;
+          console.debug(`Logging for device ${deviceSn}`, scenInfo);
+          const energyAnalysis = await loggedInApi.energyAnalysis({
+            siteId: site.site_id,
+            deviceSn: device,
+            type: 'day',
+          });
+          console.debug('energyAnalysis', energyAnalysis);
+          console.debug('scenInfo', scenInfo);
+          devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn] = {
+            solar_pv1: Number(scenInfo.data.solarbank_info.solar_power_1),
+            solar_pv2: Number(scenInfo.data.solarbank_info.solar_power_2),
+            solar_pv3: Number(scenInfo.data.solarbank_info.solar_power_3),
+            solar_pv4: Number(scenInfo.data.solarbank_info.solar_power_4),
+            solar_total: Number(
+              scenInfo.data.solarbank_info.solarbank_list[0].photovoltaic_power,
+            ),
+            bat_soc: Number(
+              scenInfo.data.solarbank_info.solarbank_list[0].battery_power,
+            ),
+            battery_charge: Number(
+              scenInfo.data.solarbank_info.solarbank_list[0].charging_power,
+            ),
+            battery_discharge: Number(
+              scenInfo.data.solarbank_info.battery_discharge_power,
+            ),
+            to_home: Number(scenInfo.data.solarbank_info.total_output_power),
+          };
+          deviceList = await loggedInApi.getRelateAndBindDevices();
+          console.log(
+            'Current device stats',
+            devices[scenInfo.data.solarbank_info.solarbank_list[0].device_sn],
+          );
+        }
+        logger.log('Published.');
+      } else {
+        logger.error('Unknown error during fetching data');
       }
-      logger.log('Published.');
     } else {
       logger.error('Not logged in');
     }
