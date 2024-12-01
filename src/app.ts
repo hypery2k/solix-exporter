@@ -109,7 +109,7 @@ async function run(): Promise<void> {
         const scenInfo = await loggedInApi.scenInfo(site.site_id);
         const deviceSn =
           scenInfo.data.solarbank_info.solarbank_list[0].device_sn;
-        console.log(`Logging for device ${deviceSn}`, scenInfo);
+        console.debug(`Logging for device ${deviceSn}`, scenInfo);
         const energyAnalysis = await loggedInApi.energyAnalysis({
           siteId: site.site_id,
           deviceSn: device,
