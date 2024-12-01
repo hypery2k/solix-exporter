@@ -24,6 +24,9 @@ function restService() {
     const deviceInfo: any = devices[device];
     if (deviceInfo) {
       const response = `
+# TYPE solar_api_status gauge
+# HELP solar_api_status Status of the Solix API, 1 (normal), -1 (error)
+solar_api_status 0
 # HELP solar_now_p current watt of solar
 # TYPE solar_now_p gauge
 solar_now_p ${Math.round(<number>deviceInfo.solar_total)}
@@ -43,7 +46,14 @@ solar_now_grid ${Math.round(<number>deviceInfo.to_home)}
       res.type('txt');
       res.send(response);
     } else {
-      res.send('No data available');
+      const response = `
+      # TYPE solar_api_status gauge
+      # HELP solar_api_status Status of the Solix API, 1 (normal), -1 (error)
+      solar_api_status -1
+      `;
+      res.type('txt');
+      res.send(response);
+      console.log('No data available');
     }
   });
 
