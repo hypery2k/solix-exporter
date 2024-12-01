@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/t21n/solix-exporter/compare/v1.0.0...v1.1.0) (2024-12-01)
+
+
+### Bug Fixes
+
+* Correcting dockerfile entrypoint ([c2bc077](https://github.com/t21n/solix-exporter/commit/c2bc077cd96738a13576322b70a00dcccc8881d0))
+* Improved error handling ([6991dc5](https://github.com/t21n/solix-exporter/commit/6991dc5c2725ae2c6e49721cb02ee0403998b3dd))
+
+
+### Features
+
+* Adding API status gauge ([d3bd7d8](https://github.com/t21n/solix-exporter/commit/d3bd7d87214f6d1c1894fede19a04f83719bb1ad))
+
+
+
 # [1.0.0](https://github.com/t21n/solix-exporter/compare/6103c8aca7ff14f7b93d433910c9b0400737e721...v1.0.0) (2024-11-29)
 
 

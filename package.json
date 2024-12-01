@@ -1,6 +1,6 @@
 {
   "name": "solix-exporter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "src/app.ts",
   "author": "Martin Reinhardt",
   "license": "MIT",
